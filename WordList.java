@@ -1,11 +1,7 @@
 import java.util.ArrayList;
 
-public class WordList {
-    ArrayList<Word> arr;
+public class WordList extends ArrayList<Word> {
 
-    public WordList(){
-        arr = new ArrayList<Word>();
-    }
 
     public int getCollisions(int iValue, int modValue){
         return -1;

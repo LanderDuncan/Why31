@@ -44,11 +44,11 @@ public class WordList extends ArrayList<Word> {
     public int CollisionCount(int iValue, int modValue) {
         Set<Integer> claimedValues = new HashSet<Integer>();
         int count = 0;
-        for(Word w : this){
+        for (Word w : this) {
             Integer value = w.getHash(iValue) % modValue;
-            if(claimedValues.contains(value)){
+            if (claimedValues.contains(value)) {
                 count++;
-            }else {
+            } else {
                 claimedValues.add(value);
             }
         }
@@ -56,6 +56,24 @@ public class WordList extends ArrayList<Word> {
     }
 
     public long getAverageTime(int iValue) {
+        long sum = 0;
+        for (int i = 0; i < this.size(); i++) {
+            // TODO: Replace with a check that the next addition will not overflow the long.
+            if (true) {
+                sum += this.get(i).getTime(iValue);
+            } else {
+                return averageTimeOverflow(sum, i, iValue);
+            }
+        }
+        return sum / this.size();
+    }
+
+    private long averageTimeOverflow(long cur, int startingIndex, int iValue) {
+        // BigInteger sum = new BigInteger(cur);
+        // for(int i = startingIndex; i < this.size(); i++){
+        // sum += this.get(i).getTime(iValue);
+        // }
+        // return sum / this.size();
         return -1;
     }
 

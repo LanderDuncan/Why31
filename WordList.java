@@ -81,6 +81,14 @@ public class WordList extends ArrayList<Word> {
         return null;
     }
 
+    public int[] getHashArray(int iValue) {
+        int[] toReturn = new int[this.size()];
+        for(int i = 0; i < this.size(); i++){
+            toReturn[i] = this.get(i).getHash(iValue);
+        }
+        return toReturn;
+    }
+
     public void exportToCSV() {
 
     }

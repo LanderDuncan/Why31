@@ -78,12 +78,16 @@ public class WordList extends ArrayList<Word> {
     }
 
     public long[] getTimeArray(int iValue) {
-        return null;
+        long[] toReturn = new long[this.size()];
+        for (int i = 0; i < this.size(); i++) {
+            toReturn[i] = this.get(i).getTime(iValue);
+        }
+        return toReturn;
     }
 
     public int[] getHashArray(int iValue) {
         int[] toReturn = new int[this.size()];
-        for(int i = 0; i < this.size(); i++){
+        for (int i = 0; i < this.size(); i++) {
             toReturn[i] = this.get(i).getHash(iValue);
         }
         return toReturn;

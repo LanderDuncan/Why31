@@ -1,12 +1,23 @@
+/**
+ * Stores a word and several hash values along with the calculation time for
+ * each.
+ * 
+ * @author Lander Duncan
+ * @version 10/25/2023
+ */
 public class Word {
     private final String word;
     private int[] hashValues;
     private long[] timeToCalculate;
 
     /**
+     * Constructor for the Word class.
      * 
-     * @param word
-     * @param valuesToCalculate
+     * @param word              The string to be hashed.
+     * @param valuesToCalculate The amount of hash values to calculate. Begins at
+     *                          zero.
+     * @throws IllegalArgumentException if the word is null or empty or when the
+     *                                  valuesToCalculate field is negative.
      */
     public Word(String word, int valuesToCalculate) {
         if (word == null || word.equals("")) {
@@ -20,8 +31,10 @@ public class Word {
     }
 
     /**
+     * Helper method for the contructor that populates the hash vales and
+     * calculation time arrays.
      * 
-     * @param max
+     * @param max the number of values to calculate.
      */
     private void values(int max) {
         hashValues = new int[max];
@@ -41,17 +54,29 @@ public class Word {
     }
 
     /**
+     * Getter for the word attribute.
      * 
-     * @return
+     * @return String representing the word passed to the contructor.
      */
     public String getWord() {
         return word;
     }
 
     /**
+     * Getter method for the amount of stored hashes.
      * 
-     * @param iValue
-     * @return
+     * @return int representing the amount of stored hashes.
+     */
+    public int size() {
+        return hashValues.length;
+    }
+
+    /**
+     * Getter method for the hash values.
+     * 
+     * @param iValue the value of the hash to return. Begins at zero.
+     * @return int hash value.
+     * @throws IllegalArgumentException if the index is outside of the range.
      */
     public int getHash(int iValue) {
         if (iValue < 0 || iValue >= hashValues.length) {
@@ -61,9 +86,12 @@ public class Word {
     }
 
     /**
+     * Getter method for the time values.
      * 
-     * @param iValue
-     * @return
+     * @param iValue int representing the value of the hash to get the time for.
+     *               Begins at zero.
+     * @return long time to calculate
+     * @throws IllegalArgumentException if the index is outside of the range.
      */
     public long getTime(int iValue) {
         if (iValue < 0 || iValue >= timeToCalculate.length) {

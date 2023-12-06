@@ -3,7 +3,7 @@
  * each.
  * 
  * @author Lander Duncan
- * @version 10/25/2023
+ * @version 
  */
 public class Word {
     private final String word;

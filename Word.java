@@ -99,4 +99,20 @@ public class Word {
         }
         return timeToCalculate[iValue];
     }
+
+    /**
+     * Getter method for the hash values array.
+     * @return int array representing the hash values at each index.
+     */
+    public int[] getHashValues(){
+        return hashValues;
+    }
+
+    /**
+     * Getter method for the time values array.
+     * @return long array representing the time it took to calculate each hash value.
+     */
+    public long[] getTimeToCalculate(){
+        return timeToCalculate;
+    }
 }

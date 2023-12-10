@@ -1,3 +1,4 @@
+package com.stringhashing;
 /**
  * Stores a word and several hash values along with the calculation time for
  * each.

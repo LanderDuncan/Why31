@@ -1,3 +1,4 @@
+package com.stringhashing;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -161,6 +162,12 @@ public class WordList extends ArrayList<Word> {
      * Exports the wordList to a csv file.
      */
     public void exportToCSV() {
-
+        // String header = "\"word\", ";
+        // for(int i = 0; i < this.size(); i++){
+        //     header += "\""+i+"\""+", ";
+        // }
+        // header = header.substring(0, header.length()-1);
+        // System.out.println(header);
+        // String line;
     }
 }

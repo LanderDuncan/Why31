@@ -1,9 +1,13 @@
 package com.stringhashing;
+
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.HashSet;
+import com.opencsv.CSVWriter;
 
 /**
  * Extension of the ArrayList<Word> class that adds additional methods to help
@@ -162,12 +166,32 @@ public class WordList extends ArrayList<Word> {
      * Exports the wordList to a csv file.
      */
     public void exportToCSV() {
-        // String header = "\"word\", ";
-        // for(int i = 0; i < this.size(); i++){
-        //     header += "\""+i+"\""+", ";
-        // }
-        // header = header.substring(0, header.length()-1);
-        // System.out.println(header);
-        // String line;
+        // TODO: Assumes 2d array. Add field for most hashes.
+        String csvFileName = "hashvalues.csv";
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(csvFileName))) {
+            // Define data to be written to the CSV file
+            String[] header = new String[this.size()];
+            // TODO: Change to most hashes.
+            for (int i = 0; i < this.size(); i++) {
+                header[i] = String.valueOf(i);
+            }
+
+            writer.writeNext(header);
+
+            for(int i = 0; i < this.size();i++){
+                String[] data = new String [this.get(i).size()+1];
+                data[0] = this.get(i).getWord();
+                int[] hashValues = this.get(i).getHashValues();
+                for(int k = 1; k < hashValues.length+1; k++){
+                    data[k] = String.valueOf(hashValues[k-1]);
+                }
+                writer.writeNext(data);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

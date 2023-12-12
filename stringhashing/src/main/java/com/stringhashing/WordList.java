@@ -74,7 +74,7 @@ public class WordList extends ArrayList<Word> {
      *                                  value is less than one.
      */
     public int collisionCount(int iValue, int modValue) {
-        if (iValue < 0 || iValue > this.size()) {
+        if (iValue < 0 || iValue > this.maxHashes) {
             throw new IllegalArgumentException("Index must be within bounds.");
         }
         if (modValue < 1) {
@@ -102,7 +102,7 @@ public class WordList extends ArrayList<Word> {
      * @throws IllegalArgumentException if the index is out of bounds.
      */
     public long averageTime(int iValue) {
-        if (iValue < 0 || iValue > this.size()) {
+        if (iValue < 0 || iValue > this.maxHashes) {
             throw new IllegalArgumentException("Index must be within bounds.");
         }
         long sum = 0;
@@ -202,6 +202,40 @@ public class WordList extends ArrayList<Word> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public void exportAverageTimeToCSV() {
+        String csvFileName = "averagetime.csv";
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(csvFileName))) {
+            String[] headers = new String[maxHashes];
+            String[] values = new String[maxHashes];
+            for (int i = 0; i < maxHashes; i++) {
+                headers[i] = String.valueOf(i);
+                values[i] = String.valueOf(averageTime(i));
+            }
+            writer.writeNext(headers);
+            writer.writeNext(values);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exportTrueHashCollisionsToCSV(double loadFactor) {
+        String csvFileName = "collisions.csv";
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(csvFileName))) {
+            double modValue = ((double)this.size()) / loadFactor;
+            String[] headers = new String[maxHashes];
+            String[] values = new String[maxHashes];
+            for (int i = 0; i < maxHashes; i++) {
+                headers[i] = String.valueOf(i);
+                values[i] = String.valueOf(collisionCount(i, (int)modValue));
+            }
+            writer.writeNext(headers);
+            writer.writeNext(values);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

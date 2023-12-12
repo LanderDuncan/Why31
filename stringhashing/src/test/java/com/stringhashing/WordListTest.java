@@ -2,6 +2,8 @@ package com.stringhashing;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
 import org.junit.Test;
 
 /**
@@ -13,11 +15,9 @@ public class WordListTest
     @Test
     public void exportToCSV()
     {
-        // Word w1 = new Word("Hello", 5);
-        // Word w2 = new Word("Goodbye", 5);
-        // WordList li = new WordList();
-        // li.add(w1);
-        // li.add(w2);
-        // li.exportHashesToCSV();
+        File f = new File("C:\\Users\\Lande\\OneDrive\\Desktop\\VSC Projects\\Why31\\stringhashing\\src\\main\\java\\com\\stringhashing\\google-10000-english.txt");
+        WordList li = new WordList(f,10000);
+        li.exportAverageTimeToCSV();
+        li.exportTrueHashCollisionsToCSV(.75);
     }
 }

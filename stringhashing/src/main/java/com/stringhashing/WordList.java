@@ -17,12 +17,14 @@ import com.opencsv.CSVWriter;
  * @version
  */
 public class WordList extends ArrayList<Word> {
+    private int maxHashes;
 
     /**
      * Default constructor for empty list.
      */
     public WordList() {
         super();
+        maxHashes = 0;
     }
 
     /**
@@ -38,6 +40,7 @@ public class WordList extends ArrayList<Word> {
         if (valuesToCalculate < 0) {
             throw new IllegalArgumentException("The value to calculate cannot be negative.");
         }
+        maxHashes = valuesToCalculate;
         Scanner wordScanner = null;
         try {
             wordScanner = new Scanner(f);
@@ -49,6 +52,14 @@ public class WordList extends ArrayList<Word> {
             throw new IllegalArgumentException("File has thrown an error.");
         }
 
+    }
+
+    @Override
+    public boolean add(Word w) {
+        if (w.size() > maxHashes) {
+            maxHashes = w.size();
+        }
+        return super.add(w);
     }
 
     /**
@@ -165,26 +176,25 @@ public class WordList extends ArrayList<Word> {
     /**
      * Exports the wordList to a csv file.
      */
-    public void exportToCSV() {
-        // TODO: Assumes 2d array. Add field for most hashes.
+    public void exportHashesToCSV() {
         String csvFileName = "hashvalues.csv";
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFileName))) {
             // Define data to be written to the CSV file
-            String[] header = new String[this.size()];
-            // TODO: Change to most hashes.
-            for (int i = 0; i < this.size(); i++) {
-                header[i] = String.valueOf(i);
+            String[] header = new String[maxHashes + 1];
+            header[0] = "Word";
+            for (int i = 0; i < maxHashes; i++) {
+                header[i + 1] = String.valueOf(i);
             }
 
             writer.writeNext(header);
 
-            for(int i = 0; i < this.size();i++){
-                String[] data = new String [this.get(i).size()+1];
+            for (int i = 0; i < this.size(); i++) {
+                String[] data = new String[this.get(i).size() + 1];
                 data[0] = this.get(i).getWord();
                 int[] hashValues = this.get(i).getHashValues();
-                for(int k = 1; k < hashValues.length+1; k++){
-                    data[k] = String.valueOf(hashValues[k-1]);
+                for (int k = 1; k < hashValues.length + 1; k++) {
+                    data[k] = String.valueOf(hashValues[k - 1]);
                 }
                 writer.writeNext(data);
 

@@ -208,14 +208,14 @@ public class WordList extends ArrayList<Word> {
         String csvFileName = "averagetime.csv";
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFileName))) {
-            String[] headers = new String[maxHashes];
-            String[] values = new String[maxHashes];
-            for (int i = 0; i < maxHashes; i++) {
-                headers[i] = String.valueOf(i);
-                values[i] = String.valueOf(averageTime(i));
-            }
+            String[] headers = { "Index", "Time" };
             writer.writeNext(headers);
-            writer.writeNext(values);
+            for (int i = 0; i < maxHashes; i++) {
+                String[] row = new String[2];
+                row[0] = String.valueOf(i);
+                row[1] = String.valueOf(averageTime(i));
+                writer.writeNext(row);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -225,15 +225,15 @@ public class WordList extends ArrayList<Word> {
         String csvFileName = "collisions.csv";
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFileName))) {
-            double modValue = ((double)this.size()) / loadFactor;
-            String[] headers = new String[maxHashes];
-            String[] values = new String[maxHashes];
-            for (int i = 0; i < maxHashes; i++) {
-                headers[i] = String.valueOf(i);
-                values[i] = String.valueOf(collisionCount(i, (int)modValue));
-            }
+            double modValue = ((double) this.size()) / loadFactor;
+            String[] headers = { "Index", "Collisions" };
             writer.writeNext(headers);
-            writer.writeNext(values);
+            for (int i = 0; i < maxHashes; i++) {
+                String[] row = new String[2];
+                row[0] = String.valueOf(i);
+                row[1] = String.valueOf(collisionCount(i, (int) modValue));
+                writer.writeNext(row);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

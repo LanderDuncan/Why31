@@ -3,6 +3,7 @@ package com.stringhashing;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
@@ -105,36 +106,14 @@ public class WordList extends ArrayList<Word> {
         if (iValue < 0 || iValue > this.maxHashes) {
             throw new IllegalArgumentException("Index must be within bounds.");
         }
-        long sum = 0;
-        for (int i = 0; i < this.size(); i++) {
-            // TODO: Replace with a check that the next addition will not overflow the long.
-            if (true) {
-                sum += this.get(i).getTime(iValue);
-            } else {
-                return averageTimeOverflow(sum, i, iValue);
-            }
-        }
-        return sum / this.size();
-    }
 
-    /**
-     * Helper method for the averageTime method in the case of a long overflow.
-     * 
-     * @param cur           the current sum
-     * @param startingIndex the next index to be added.
-     * @param iValue        the hash value being averaged.
-     * @return long representing the average time to calculate a hash value.
-     * @throws IllegalArgumentException if the arguments are out of bounds.
-     */
-    private long averageTimeOverflow(long cur, int startingIndex, int iValue) {
-        // TODO: Implement this
-        // if invalid args throw invalid arg.
-        // BigInteger sum = new BigInteger(cur);
-        // for(int i = startingIndex; i < this.size(); i++){
-        // sum += this.get(i).getTime(iValue);
-        // }
-        // return sum / this.size();
-        return -1;
+        BigInteger sum = BigInteger.ZERO;
+        for (int i = 0; i < this.size(); i++) {
+            sum = sum.add(BigInteger.valueOf(this.get(i).getTime(iValue)));
+        }
+
+        BigInteger average = sum.divide(BigInteger.valueOf(this.size()));
+        return average.longValue();
     }
 
     /**

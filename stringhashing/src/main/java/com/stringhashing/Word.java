@@ -1,4 +1,5 @@
 package com.stringhashing;
+
 /**
  * Stores a word and several hash values along with the calculation time for
  * each.
@@ -20,7 +21,7 @@ public class Word {
      * @throws IllegalArgumentException if the word is null or empty or when the
      *                                  valuesToCalculate field is negative.
      */
-    public Word(String word, int valuesToCalculate) {
+    public Word(String word, int valuesToCalculate) throws IllegalArgumentException {
         if (word == null || word.equals("")) {
             throw new IllegalArgumentException("String argument must be non-empty and non-null.");
         }
@@ -79,7 +80,7 @@ public class Word {
      * @return int hash value.
      * @throws IllegalArgumentException if the index is outside of the range.
      */
-    public int getHash(int iValue) {
+    public int getHash(int iValue) throws IllegalArgumentException {
         if (iValue < 0 || iValue >= hashValues.length) {
             throw new IllegalArgumentException("iValue must be within the range of hashed values.");
         }
@@ -94,7 +95,7 @@ public class Word {
      * @return long time to calculate
      * @throws IllegalArgumentException if the index is outside of the range.
      */
-    public long getTime(int iValue) {
+    public long getTime(int iValue) throws IllegalArgumentException {
         if (iValue < 0 || iValue >= timeToCalculate.length) {
             throw new IllegalArgumentException("iValue must be within the range of hashed values.");
         }

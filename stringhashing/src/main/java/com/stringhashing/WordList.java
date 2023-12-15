@@ -37,7 +37,7 @@ public class WordList extends ArrayList<Word> {
      * @throws IllegalArgumentException if the file is not correct or if a negative
      *                                  int is passed.
      */
-    public WordList(File f, int valuesToCalculate) {
+    public WordList(File f, int valuesToCalculate) throws IllegalArgumentException {
         if (valuesToCalculate < 0) {
             throw new IllegalArgumentException("The value to calculate cannot be negative.");
         }
@@ -74,7 +74,7 @@ public class WordList extends ArrayList<Word> {
      * @throws IllegalArgumentException if the index is out of bounds or if the mod
      *                                  value is less than one.
      */
-    public int collisionCount(int iValue, int modValue) {
+    public int collisionCount(int iValue, int modValue) throws IllegalArgumentException {
         if (iValue < 0 || iValue > this.maxHashes) {
             throw new IllegalArgumentException("Index must be within bounds.");
         }
@@ -102,7 +102,7 @@ public class WordList extends ArrayList<Word> {
      * @return long representing the average time.
      * @throws IllegalArgumentException if the index is out of bounds.
      */
-    public long averageTime(int iValue) {
+    public long averageTime(int iValue) throws IllegalArgumentException {
         if (iValue < 0 || iValue > this.maxHashes) {
             throw new IllegalArgumentException("Index must be within bounds.");
         }
@@ -123,7 +123,7 @@ public class WordList extends ArrayList<Word> {
      * @return long array containing all the times.
      * @throws IllegalArgumentException if the arguments are out of bounds.
      */
-    public long[] getTimeArray(int iValue) {
+    public long[] getTimeArray(int iValue) throws IllegalArgumentException {
         if (iValue < 0 || iValue > this.size()) {
             throw new IllegalArgumentException("Index must be within bounds.");
         }
@@ -141,7 +141,7 @@ public class WordList extends ArrayList<Word> {
      * @return int array containing all the values.
      * @throws IllegalArgumentException if the arguments are out of bounds.
      */
-    public int[] getHashArray(int iValue) {
+    public int[] getHashArray(int iValue) throws IllegalArgumentException {
         if (iValue < 0 || iValue > this.size()) {
             throw new IllegalArgumentException("Index must be within bounds.");
         }
@@ -153,13 +153,15 @@ public class WordList extends ArrayList<Word> {
     }
 
     /**
-     * Exports the wordList to a csv file.
+     * Exports hash values to a CSV file named "hashvalues.csv".
+     * Each row contains a word and its corresponding hash values.
+     *
+     * @throws IOException if an I/O error occurs while writing to the file.
      */
-    public void exportHashesToCSV() {
+    public void exportHashesToCSV() throws IOException {
         String csvFileName = "hashvalues.csv";
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFileName))) {
-            // Define data to be written to the CSV file
             String[] header = new String[maxHashes + 1];
             header[0] = "Word";
             for (int i = 0; i < maxHashes; i++) {
@@ -179,11 +181,17 @@ public class WordList extends ArrayList<Word> {
 
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Error occurred while writing to the CSV file.", e);
         }
     }
 
-    public void exportAverageTimeToCSV() {
+    /**
+     * Exports time values to a CSV file named "averagetime.csv".
+     * Each row contains an iValue and its corresponding time values.
+     *
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
+    public void exportAverageTimeToCSV() throws IOException {
         String csvFileName = "averagetime.csv";
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFileName))) {
@@ -196,11 +204,24 @@ public class WordList extends ArrayList<Word> {
                 writer.writeNext(row);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Error occurred while writing to the CSV file.", e);
+
         }
     }
 
-    public void exportTrueHashCollisionsToCSV(double loadFactor) {
+    /**
+     * Exports collision count values to a CSV file named "collisions.csv".
+     * Each row contains an iValue and its coorisponding collision count for a given
+     * loadFactor.
+     *
+     * @param loadFactor the loadFactor of the hashMap to calculate collisions for. Must be greater than 0 and at most 1.
+     * @throws IOException if an I/O error occurs while writing to the file.
+     * @throws IllegalArgumentException if the loadFactor is out of bounds.
+     */
+    public void exportTrueHashCollisionsToCSV(double loadFactor) throws IOException, IllegalArgumentException {
+        if(loadFactor <=0 || loadFactor > 1){
+            throw new IllegalArgumentException("LoadFactor must be greater than 0 and at most 1.");
+        }
         String csvFileName = "collisions.csv";
 
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFileName))) {
@@ -214,7 +235,7 @@ public class WordList extends ArrayList<Word> {
                 writer.writeNext(row);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Error occurred while writing to the CSV file.", e);
         }
     }
 }

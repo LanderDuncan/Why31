@@ -2,8 +2,12 @@ package com.stringhashing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import com.opencsv.CSVWriter;
 
 /**
  * Unit test for the WordList class.
@@ -21,7 +25,7 @@ public class WordTest {
         assertThrows(IllegalArgumentException.class, () -> new Word(null, 0));
         assertThrows(IllegalArgumentException.class, () -> new Word("", 0));
         assertThrows(IllegalArgumentException.class, () -> new Word("Hello", -1));
-        Word w = new Word("Hello", 0);
+        new Word("Hello", 0);
     }
 
     @Test
@@ -53,14 +57,14 @@ public class WordTest {
     public void getHashValues() {
         int[] hashes = first.getHashValues();
         int[] expected = { 111, 500, 2719, 9966, 27167 };
-        assertTrue(hashes.equals(expected));
+        assertArrayEquals(hashes, expected);
 
     }
 
     @Test
     public void getTimeToCalculate() {
         long[] time = first.getTimeToCalculate();
-        assertTrue(time.length > 5);
+        assertTrue(time.length == 5);
         for (long l : time) {
             assertTrue(l > 0);
         }

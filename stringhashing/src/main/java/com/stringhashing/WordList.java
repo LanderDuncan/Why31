@@ -15,7 +15,7 @@ import com.opencsv.CSVWriter;
  * create and explore the data surrounding the hash values.
  * 
  * @author Lander Duncan
- * @version
+ * @version 1/2/2024
  */
 public class WordList extends ArrayList<Word> {
     private int maxHashes;

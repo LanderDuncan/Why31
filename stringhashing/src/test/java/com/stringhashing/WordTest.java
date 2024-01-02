@@ -1,16 +1,11 @@
 package com.stringhashing;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.FileWriter;
-import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import com.opencsv.CSVWriter;
 
 /**
- * Unit test for the WordList class.
+ * Unit test for the Word class.
  */
 public class WordTest {
     private Word first;

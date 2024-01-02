@@ -5,7 +5,7 @@ package com.stringhashing;
  * each.
  * 
  * @author Lander Duncan
- * @version
+ * @version 1/2/2024
  */
 public class Word {
     private final String word;
